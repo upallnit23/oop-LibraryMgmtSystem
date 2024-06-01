@@ -1,154 +1,233 @@
 #Library Management System
 #Book Operations Class
-
+library = {}
 class Book:
-    def __init__(self, title):
-        self.booklist = {"Python for Beginners": 6, "The Light in Us": 2} #Book array in dict. form, with title and stock number
+    def __init__(self, bookID, title, author):
+        self.is_available = True
         self.title = title
+        self.bookID = bookID
+        self.author = author
 
-    def add_book(self):
+    def get_title(self):
+        return self.title
+    
+    def get_bookID(self):
+        return self.bookID
+    
+    def get_author(self):
+        return self.author
+    
+    def set_author(self, new_author):
+        self.author = new_author
+    
+    def is_available(self):
+        return self.is_available
+
+    def add_book(library):
+        bookID = input("Enter book ID: ")
         title = input("Enter title of book: ")
-        amount = int(input("Enter amount of book title to add"))
-        if title in self.booklist:
-            self.booklist[title] += amount
+        author = input("Enter author of book: ")
+        library[bookID] = Book(bookID, title, author)
+        print(f"For ID {library[bookID].get_bookID()}, title: {library[bookID].get_title()} author: {library[bookID].get_author()} to book inventory. ")
+
+    def availability(self):
+        if self.is_available:
+            self.is_available = False
+            return True
         else:
-            self.booklist[title] = amount
-        print(f"{title} added to bookstore.")
+            return False
 
-    def borrow_book(self, title, new_userID):
-        if self.booklist.get(title) > 0:
-            new_userID = int(input("Enter userID: "))
-            self.set_userID(new_userID)
-            self.booklist[title] -= 1
-            self.booklist.update[userID] = new_userID
-            self.booklist[new_userID] += title
-            self.booklist.user_status(status)
-            print(f"{title} borrowed by {new_userID}.")
+    def borrow_book(self, library, userlist):
+        bookID = input("Enter book ID: ")
+        userID = input("Enter name of borrower: ")
+        if bookID in library:
+            if self.is_available:
+                user.new_loanstatus = True
+                self.is_available = False
+                print(f"{library[bookID].get_title} checked out by {userlist[userID].get_user}")
+            else:
+                print(f"{library[bookID].get.title} is not available. ")
         else:
-            (f"{title} is not available.")
-
-    def return_book(self, self.__userID, self.__status):
-        title = input("Enter title of book returned: ")
-        if title in self.booklist:
-            self.booklist[title] += 1
-            self.booklist.user_status(self.__status)
-            self.booklist.retuser_status(self.__status)
-            print(f"{title} returned by {self.__userID}.")
+            print(f"{bookID} is not in library.")
+  
+    def return_book(library, userlist):
+        bookID = input("Enter ID of book being returned: ")
+        userID = input("Enter ID of borrower: ")
+        if bookID in library:
+            self.is_available = True
+            userlist.new_loanstatus = False
+            print(f"{library[bookID].get_title} returned by {userlist[userID].get_user}")
         else:
-            print(f"{title} not found.")
+            print(f"{bookID} is not in valid. ")
 
-    def search4_book(self):
-        title = input("Enter title of book to search for: ")
-        if title in self.booklist:
-            print(f"{self.booklist[title]} is found.")
-        else:
-            print(f"{self.booklist[title]} not found.")
+    def search_book(self):
+        try:
+            bookID = input("Enter ID of book: ")
+            if bookID in library:
+                print(f"{library[bookID].get_title} is in library.")
+        except ValueError as e:
+            print(f"{bookID} is not valid.")
+        except Exception as e:
+            print(f"{bookID} is not in library.")
 
-
-    def display_books(self):
+    def display_books(library):
         print("***Library Booklist***")
-        for title, amount in self.booklist.items()
-        print(f"{self.booklist[title]}, {self.booklist[amount]}")
+        for key, values in library.items():
+            print(f"{library[bookID].get_bookID}, {library[bookID].get_title}, {library[bookID].get.author}")
 
 #Library Management System
 #User Operations Class
-
-class UserOperations(Book):
-    def __init__(self, title, username, userID, status):
-        super().__init__(self, title)
-        self.__username = username
+userlist = {}
+class UserOps(Book):
+    def __init__(self, user, userID, loanstatus):
+        #super().__init__(self, bookID, title, author)
+        self.__user = user
         self.__userID = userID
-        self.__status = status
+        self.loanstatus = False
 
-    def get_username(self):
-        return self.__username
+    def get_user(self):
+        return self.__user
     
     def get_userID(self):
         return self.__userID
 
-    def get_status(self):
-        return self.__status
+    def get_loanstatus(self):
+        return self.loanstatus
     
-    def set_status(self, new_status):
-        self.__status = new_status
+    def set_loanstatus(self, new_loanstatus):
+        self.loanstatus = new_loanstatus
 
-    def user_status(self, userID, status):
-        self.booklist[status] += "borrowed"
-    
-    def retuser_status(self, userID, status):
-        self.booklist[status] += "returned"
-    
-    def display_user_status(self):
-        print("***User Status***")
-        for userID, status in self.booklist.items()
-        print(f"{self.booklist[userID]}, {self.booklist[status]}")
+    def add_user(userlist):
+        userID = input("Enter user ID: ")
+        user = input("Enter name of user: ")
+        userlist[userID] = UserOps(userID, user, loanstatus = False)
+        print(f"For ID {userlist[userID].get_userID()}, user: {userlist[userID].get_user()} loanstatus: {userlist[userID].get_loanstatus()} ")
+
+
+    def display_user(userlist):
+        print("***User List***")
+        for key, values in userlist.items():
+            print(f"{userlist[userID].get_userID}, {userlist[userID].get_user}, {userlist[userID].get_loanstatus}")
+
 #Library Management System
 #Author Operations Class
 
-authorlist = []
-
+authorlist = {}
 class Author(Book):
-    def __init__(self, title, name, biography):
-        super().__init__(self, title)
-        self.name = name
+    def __init__(self, title, author, biography):
+        super().__init__(self, bookID, title, author)
         self.biography = biography
+
+    def get_bio(self):
+        return self. biography
+    
+    def set_bio(self, new_biography):
+        self.biography = new_biography
     
     def display_authorinfo(self):
         title = input("Enter title of book to search for: ")
-        if title in self.booklist:
-            self.name = input("Enter name of author: ")
-            self.biography =  input("Enter short biography of author: ")
-            #authorlist.append(title)
-            authorlist.update({"Title": title, "Author": self.name, "Biography": self.biography})
+        if title in library:
+            name = input("Enter name of author: ")
+            name = self.author
+            biography =  input("Enter short biography of author: ")
+            authorlist[self.author] = Author(self.title, self.author, biography)
             print("This is a brief description of the author's information. ")
-            print(f"Title {authorlist[title]}, Author {authorlist[self.name]}")
+            print(f"Title {authorlist[title]}, Author {authorlist[self.author]}")
             print(f"Biography of {authorlist[title]}.")
         else:
-            print(f"{self.booklist[title]} not found.")
+            print(f"{title} not found.")
 #Library Management System
 #Genre Operations Class           
 
 genrelist = ["fantasy", "horror", "science fiction", "classics", "comics", "comedy", "romance", "history", "thriller", "adventure"]
-
+genres = {}
 class Genre(Book):
-    def __init__(self, title, description, category):
+    def __init__(self, bookID, title, author, description, category):
         super().__init__(self, title)
         self.description = description
         self.category = category
 
-    def add_genre(self):
-        title = input("Enter title of book: ")
-        if title in self.booklist:
-            print("Genre list is printed below ")
-            print(genrelist)
-            category = input("Enter category of book: ")
-            if 
-            description = input("Enter brief description of book: ")
-            category = input("Enter category of title: ")
-        if category in genrelist:
-        print(f"{title} added to bookstore.")
+    def get_description(self):
+        return self.description
+    
+    def get_category(self):
+        return self.category
+    
+    def set_description(self, new_description):
+        self.description = new_description
+
+    def set_category(self, new_category):
+        self.category = new_category
+
+    def add_genre(library):
+        title = input("Enter title: ")
+        if title in library:
+            category = input("Enter category of author: ")
+            description = input("Enter description ")
+            if description == "":
+                description = "null"
+            if category in genrelist:
+                genres[self.title] = Genre(self.title, self.author, category, description)
+            else:
+                genres[self.title] = Genre(self.title, self.author, category, description)
+        else:
+            print(f"Title {title} is not in library.")
+
+    def display_genre(genres):
+        print("***Genre of Books List***")
+        for key, values in genres.items():
+            print(f"{genres[self.title].get_title}, {genres[self.title].get_category}, {genres[self.title].get.author}, {genres[self.title].get.description}")
+
+
+
+            
     
 
-    """def main():
+def main():
+    while True:       
         print("Welcome to the Library Management System")
         print("Main Menu")
-        print("1. Book Operations ")
-        print("2. User Operations ")
-        print("3. Author Operations ")
-        print("4. Genre Operations ")
-        print("5. Quit ")
-        choice = int(input("Enter 1, 2, 3, 4, or 5 for which action you want to perform: "))
+        print("a - Book Operations ")
+        print("b - User Operations ")
+        print("c - Author Operations ")
+        print("d - Genre Operations ")
+        print("e - Quit ")
+        choices = input("Enter the letter next to your choice, from a to e: ")
 
-        if choice is 1:
-            add_book()
-        if choice is 2:
-            borrow_book()
-        if choice is 3:
-            return_book()
-        if choice is 4:
-            search4_book()
-        if choice is 5:
-            display_booklist()
-        else:
-            print("Thank you for using the Library Management System")
-            exit()"""
+        if choices == "a":
+            choice = int(input("Enter 1, 2, 3, 4, or 5 for which action you want to perform: "))
+            if choice == 1:
+                Book.add_book(library)
+            if choice == 2:
+                Book.borrow_book(library, userlist)
+            if choice == 3:
+                Book.return_book(library, userlist)
+            if choice == 4:
+                Book.search_book(library)
+            if choice == 5:
+                Book.display_books(library)
+            else:
+                print(f"Your choice {choice} is invalid")
+        
+        if choices == "b":
+            choice = int(input("Enter 1, 2 for which action you want to perform: "))
+            if choice == 1:
+                UserOps.add_user(userlist)
+            if choice == 2:
+                UserOps.display_user(userlist)
+
+        if choices == "c":
+            Author.display_authorinfo(authorlist)
+
+        if choices == "d":
+            choice = int(input("Enter 1, 2 for which action you want to perform: "))
+            if choice == 1:
+                Genre.add_genre(genres)
+            if choice == 2:
+                Genre.display_genre(genres)
+
+        if choices == "e":
+            exit()
+
+if __name__ == "__main__":
+    main()
